@@ -9,41 +9,30 @@ export const Layout: FunctionComponent = ({ children }) => {
       <Head>
         <link
           rel="icon"
-          href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>💀</text></svg>"
+          href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🎥</text></svg>"
         />
-        <meta name="twitter:creator" content="@ModestTim" />
-        <meta name="twitter:site" content="@ModestTim" />
+        <meta name="twitter:creator" content="@SnipeyDev" />
+        <meta name="twitter:site" content="@SnipeyDev" />
       </Head>
       <Header>
         <Brand className="image">
           <Link href="/">
             <a>
-              <img
-                src="https://static-cdn.jtvnw.net/emoticons/v1/2010088/1.0"
-                title="tim"
-              />
-              .<span title="rip">💀</span>
+              <span title="rip">🎥</span>
             </a>
           </Link>
         </Brand>
         <Nav>
-          <Button href="https://medal.tv/users/5631100" target="_blank">
+          <Button href="https://medal.tv/users/102296" target="_blank">
             <button>Go to medal.tv</button>
           </Button>
-          <Button href="https://timcole.me">
-            <button className="accent">Go to timcole.me</button>
+          <Button href="https://snipey.dev">
+            <button className="accent">Go to snipey.dev</button>
           </Button>
         </Nav>
       </Header>
       <Content>
         {children}
-        <Footer>
-          Copyright &copy; 1997-{new Date().getFullYear()} - Timothy Cole - All
-          Rights Reserved. —{" "}
-          <a href="https://github.com/TimothyCole/tim.rip" target="_blank">
-            Star on GitHub
-          </a>
-        </Footer>
       </Content>
     </Body>
   );

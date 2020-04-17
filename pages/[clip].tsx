@@ -21,7 +21,7 @@ const ClipPage: NextPage<Props> = ({ id, clip, error }) => {
     <ClipsBody>
       <Head>
         <title>
-          {clip.contentTitle} - tim.rip - ModestTim's Medal TV Clips
+          {clip.contentTitle} - clips.snipey.dev - Snipey's Clips
         </title>
         <meta name="twitter:card" content="photo" />
         <meta name="twitter:title" content={clip.contentTitle} />

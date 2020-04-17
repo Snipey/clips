@@ -9,8 +9,8 @@ interface Props {
 const ErrorPage: NextPage<Props> = ({ statusCode, err }) => {
   return (
     <Error>
-      <h2>{err ? "Oh no! 💀" : statusCode}</h2>
-      <h3>{err ? err : "Oh no! 💀"}</h3>
+      <h2>{err ? "Oh no! 🎥" : statusCode}</h2>
+      <h3>{err ? err : "Oh no! 🎥"}</h3>
     </Error>
   );
 };

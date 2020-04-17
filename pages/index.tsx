@@ -35,10 +35,10 @@ const ClipsPage: NextPage<Props> = ({ clips, lastUpdated, error }) => {
   return (
     <ClipsBody>
       <Head>
-        <title>tim.rip - ModestTim's Medal TV Clips</title>
+        <title>clips.snipey.dev | Snipey's Medal TV Clips</title>
       </Head>
       <Heading>
-        <h1>Medal.tv Clips</h1>
+        <h1>Snipey's Clips</h1>
         <p>Last Updated: {lastUpdated}</p>
       </Heading>
       <ClipsContainer>
