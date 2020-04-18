@@ -19,6 +19,7 @@ query {
     contentViews
     contentThumbnail
     createdTimestamp
+    videoLengthSeconds
   }
 }
 `;
@@ -28,7 +29,14 @@ interface Props {
   lastUpdated?: string;
   error?: string;
 }
+function sec2time(timeInSeconds: number) {
+  let pad = function(num, size) { return ('000' + num).slice(size * -1); };
+  let time: number = timeInSeconds;
+  let minutes = Math.floor(time / 60) % 60;
+  let seconds = Math.floor(time - minutes * 60);
 
+  return pad(minutes, 2) + ':' + pad(seconds, 2);
+}
 const ClipsPage: NextPage<Props> = ({ clips, lastUpdated, error }) => {
   if (error) return <ErrorPage err={error} statusCode={500} />;
 
@@ -43,7 +51,7 @@ const ClipsPage: NextPage<Props> = ({ clips, lastUpdated, error }) => {
       </Heading>
       <ClipsContainer>
         {clips.map((clip: Clip) => (
-          <Link href="/[clip]" as={`/${clip.contentId.replace("cid", "")}`}>
+          <Link href="/v/[clip]" as={`/v/${clip.contentId.replace("cid", "")}`}>
             <a>
               <div className="clip" key={clip.contentId}>
                 <div className="meta">
@@ -53,6 +61,9 @@ const ClipsPage: NextPage<Props> = ({ clips, lastUpdated, error }) => {
                   </ClipMeta>
                   <ClipMeta horizontal="right" vertical="bottom">
                     {clip.contentViews} views
+                  </ClipMeta>
+                  <ClipMeta horizontal="left" vertical="bottom">
+                    {sec2time(clip.videoLengthSeconds)}
                   </ClipMeta>
                 </div>
                 <p>{clip.contentTitle}</p>

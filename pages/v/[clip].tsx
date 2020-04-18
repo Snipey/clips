@@ -1,10 +1,10 @@
 import { NextPage, NextPageContext } from "next";
-import { fetcher, host } from "../lib/fetcher";
-import { Clip } from "../interfaces/clips";
-import ErrorPage from "./_error";
+import { fetcher, host } from "../../lib/fetcher";
+import { Clip } from '../../interfaces/clips';
+import ErrorPage from "../_error";
 import styled from "styled-components";
-import { timeSince } from "../lib/timeSince";
-import { ClipsBody, Heading } from "../components/clips";
+import { timeSince } from "../../lib/timeSince";
+import { ClipsBody, Heading } from "../../components/clips";
 import Link from "next/link";
 import Head from "next/head";
 
@@ -48,11 +48,17 @@ const ClipPage: NextPage<Props> = ({ id, clip, error }) => {
           </Link>
           {clip.contentTitle}
         </h1>
-        <p>Published: {timeSince(clip.createdTimestamp * 1000)}</p>
+        <StatsContainer>
+          <StatsItem>Views: {clip.contentViews}</StatsItem>
+          <StatsItem>Likes: {clip.contentLikes}</StatsItem>
+          <StatsItem>Published: {timeSince(clip.createdTimestamp * 1000)}</StatsItem>
+        </StatsContainer>
       </Heading>
+      {/* Video Display */}
       <VideoContainer>
         <VideoPlayer src={clip.directClipUrl} />
       </VideoContainer>
+
     </ClipsBody>
   );
 };
@@ -68,6 +74,8 @@ ClipPage.getInitialProps = async ({ query }: NextPageContext) => {
           contentTitle
           contentThumbnail
           createdTimestamp
+          contentViews
+          contentLikes
         }
       }
     `).then((data) => data.json());
@@ -87,17 +95,27 @@ export default ClipPage;
 
 const VideoContainer = styled.div`
   position: relative;
-  padding-bottom: 30.25%;
+  margin-top: 10px;
+  width: 100%;
+  height: 720px;
+`;
+
+const StatsContainer = styled.ul`
+  position: relative;
+  list-style-type: none;
+  text-align: center;
+`;
+const StatsItem = styled.li`
+  display: inline;
+  padding: 10px;
+  font-size: 20px;
 `;
 
 const VideoPlayer = styled.iframe`
   position: absolute;
   top: 0;
   left: 0;
-  width: 70%;
-  padding-top: 15px;
-  padding-left: 15%;
-  padding-right: 15%;
-  height: 680px;
+  width: 100%;
+  height: 100%;
   border: none;
 `;
