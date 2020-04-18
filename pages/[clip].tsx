@@ -33,7 +33,7 @@ const ClipPage: NextPage<Props> = ({ id, clip, error }) => {
         <meta property="og:image" content={clip.contentThumbnail} />
         <meta
           property="og:site_name"
-          content="Timothy Cole - Software Engineer"
+          content="Snipey - Some guy you dont know"
         />
         <meta property="og:description" content={clip.contentTitle} />
 
