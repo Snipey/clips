@@ -21,7 +21,7 @@ const ClipPage: NextPage<Props> = ({ id, clip, error }) => {
     <ClipsBody>
       <Head>
         <title>
-          {clip.contentTitle} - clips.snipey.dev - Snipey's Clips
+          {clip.contentTitle} - Snipey's Clips
         </title>
         <meta name="twitter:card" content="photo" />
         <meta name="twitter:title" content={clip.contentTitle} />
@@ -33,7 +33,7 @@ const ClipPage: NextPage<Props> = ({ id, clip, error }) => {
         <meta property="og:image" content={clip.contentThumbnail} />
         <meta
           property="og:site_name"
-          content="Snipey - Some guy you dont know"
+          content="Snipey - Some guy you don't know"
         />
         <meta property="og:description" content={clip.contentTitle} />
 
