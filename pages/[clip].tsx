@@ -95,8 +95,9 @@ const VideoPlayer = styled.iframe`
   top: 0;
   left: 0;
   width: 70%;
+  padding-top: 15px;
   padding-left: 15%;
   padding-right: 15%;
-  height: 750px;
+  height: 680px;
   border: none;
 `;
