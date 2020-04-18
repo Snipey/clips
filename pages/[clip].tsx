@@ -87,14 +87,16 @@ export default ClipPage;
 
 const VideoContainer = styled.div`
   position: relative;
-  padding-bottom: 56.25%;
+  padding-bottom: 30.25%;
 `;
 
 const VideoPlayer = styled.iframe`
   position: absolute;
   top: 0;
   left: 0;
-  width: 100%;
-  height: 100%;
+  width: 70%;
+  padding-left: 15%;
+  padding-right: 15%;
+  height: 750px;
   border: none;
 `;
