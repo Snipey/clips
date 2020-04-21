@@ -1,10 +1,10 @@
 import { NextPage, NextPageContext } from "next";
-import { fetcher, host } from "../../lib/fetcher";
-import { Clip } from '../../interfaces/clips';
-import ErrorPage from "../_error";
+import { fetcher, host } from "../lib/fetcher";
+import { Clip } from '../interfaces/clips';
+import ErrorPage from "./_error";
 import styled from "styled-components";
-import { timeSince } from "../../lib/timeSince";
-import { ClipsBody, Heading } from "../../components/clips";
+import { timeSince } from "../lib/timeSince";
+import { ClipsBody, Heading } from "../components/clips";
 import Link from "next/link";
 import Head from "next/head";
 
@@ -96,7 +96,7 @@ export default ClipPage;
 const VideoContainer = styled.div`
   position: relative;
   margin-top: 10px;
-  width: 100%;
+  width: 70%;
   height: 720px;
 `;
 

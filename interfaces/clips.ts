@@ -18,3 +18,19 @@ export interface Clip {
   embedIframeCode: string;
   credits: string;
 }
+export interface Categories {
+  contentObjects: Category[];
+}
+
+export interface Category {
+  categoryId: number
+  categoryName: string,
+  alternativeName: string,
+  categoryThumbnail: string,
+  categoryFollowers: number,
+  categoryPublishers: number,
+  categoryBackground: string,
+  defaultRisk: number,
+  subreddit: string,
+  hashtag: string
+}

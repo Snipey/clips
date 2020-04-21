@@ -1,6 +1,6 @@
 import { NextPage } from "next";
 import { fetcher } from "../lib/fetcher";
-import { Clip } from "../interfaces/clips";
+import { Clip, Category, Categories } from '../interfaces/clips';
 import ErrorPage from "./_error";
 import styled from "styled-components";
 import { timeSince } from "../lib/timeSince";
@@ -14,6 +14,7 @@ query {
   lastUpdated
   clips {
     contentId
+    categoryId
     directClipUrl
     contentTitle
     contentViews
@@ -21,10 +22,23 @@ query {
     createdTimestamp
     videoLengthSeconds
   }
+  categories {
+    categoryId
+    categoryName
+    alternativeName
+    categoryThumbnail
+    categoryFollowers
+    categoryPublishers
+    categoryBackground
+    defaultRisk
+    subreddit
+    hashtag
+  }
 }
 `;
 
 interface Props {
+  categories?: Category[];
   clips?: Clip[];
   lastUpdated?: string;
   error?: string;
@@ -37,18 +51,22 @@ function sec2time(timeInSeconds: number) {
 
   return pad(minutes, 2) + ':' + pad(seconds, 2);
 }
-const ClipsPage: NextPage<Props> = ({ clips, lastUpdated, error }) => {
+const ClipsPage: NextPage<Props> = ({ categories, clips, lastUpdated, error }) => {
   if (error) return <ErrorPage err={error} statusCode={500} />;
-
+  function getCategory(id: number){
+    return categories.filter(cat => cat.categoryId == id)
+  }
   return (
     <ClipsBody>
       <Head>
         <title>Snipey's Medal TV Clips</title>
       </Head>
       <Heading>
-        <h1>Snipey's Clips</h1>
+        <h1>Latest Clips</h1>
         <p>Last Updated: {lastUpdated}</p>
       </Heading>
+        {/* // TODO Show game categories
+        // TODO Show latest clips */}
       <ClipsContainer>
         {clips.map((clip: Clip) => (
           <Link href="/v/[clip]" as={`/v/${clip.contentId.replace("cid", "")}`}>
@@ -56,9 +74,6 @@ const ClipsPage: NextPage<Props> = ({ clips, lastUpdated, error }) => {
               <div className="clip" key={clip.contentId}>
                 <div className="meta">
                   <img src={clip.contentThumbnail} />
-                  <ClipMeta horizontal="right" vertical="top">
-                    {timeSince(clip.createdTimestamp * 1000)}
-                  </ClipMeta>
                   <ClipMeta horizontal="right" vertical="bottom">
                     {clip.contentViews} views
                   </ClipMeta>
@@ -67,6 +82,16 @@ const ClipsPage: NextPage<Props> = ({ clips, lastUpdated, error }) => {
                   </ClipMeta>
                 </div>
                 <p>{clip.contentTitle}</p>
+                <ClipInfo>
+                  <InfoItem>
+                    {getCategory(clip.categoryId).map((category: Category) => (
+                      category.categoryName
+                    ))}
+                  </InfoItem>
+                  <InfoItem>
+                    {timeSince(clip.createdTimestamp * 1000)}
+                  </InfoItem>
+                </ClipInfo>
               </div>
             </a>
           </Link>
@@ -84,6 +109,7 @@ ClipsPage.getInitialProps = async () => {
 
     return {
       clips: data?.clips,
+      categories: data?.categories,
       lastUpdated: data?.lastUpdated ? timeSince(data.lastUpdated) : null,
       error: errors && errors[0]?.message,
     };
@@ -122,8 +148,8 @@ const ClipsContainer = styled.div`
     background: ${(props) => props.theme.darker};
     margin: 10px;
     display: flex;
+    border-radius: 25px;
     flex-direction: column;
-    border-bottom: 1px solid ${(props) => props.theme.accent};
     cursor: pointer;
 
     &:hover {
@@ -136,6 +162,7 @@ const ClipsContainer = styled.div`
       white-space: nowrap;
       overflow: hidden;
       text-overflow: ellipsis;
+      text-align: center;
     }
 
     div.meta {
@@ -144,6 +171,7 @@ const ClipsContainer = styled.div`
 
       img {
         width: 100%;
+        border-radius: 25px 25px 0px 0px;
       }
     }
   }
@@ -161,4 +189,22 @@ const ClipMeta = styled.div<{
 
   ${(props) => props.horizontal}: 0;
   ${(props) => props.vertical}: 0;
+`;
+
+const ClipInfo = styled.ul`
+  display: flex;
+  align-items: stretch; /* Default */
+  justify-content: space-between;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+`;
+
+const InfoItem = styled.li`
+  display: block;
+  flex: 0 1 auto; /* Default */
+  list-style-type: none;
+  font-size: 0.8em;
+  color: lightgrey;
+  padding: 2px 15px 2px 15px;
 `;
