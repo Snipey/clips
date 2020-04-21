@@ -64,7 +64,7 @@ const updateCategories = async (): Promise<void> => {
     }
   ).then((data) => data.json());
 
-  categories = data.map((category: Category) => ({
+  categories = data.contentObjects.map((category: Category) => ({
     ...category,
   }));
   lastUpdated = new Date();
