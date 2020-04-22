@@ -69,7 +69,7 @@ const ClipsPage: NextPage<Props> = ({ categories, clips, lastUpdated, error }) =
         // TODO Show latest clips */}
       <ClipsContainer>
         {clips.map((clip: Clip) => (
-          <Link href="/v/[clip]" as={`/v/${clip.contentId.replace("cid", "")}`}>
+          <Link href="/[clip]" as={`/${clip.contentId.replace("cid", "")}`}>
             <a>
               <div className="clip" key={clip.contentId}>
                 <div className="meta">
