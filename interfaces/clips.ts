@@ -26,11 +26,4 @@ export interface Category {
   categoryId: number
   categoryName: string,
   alternativeName: string,
-  categoryThumbnail: string,
-  categoryFollowers: number,
-  categoryPublishers: number,
-  categoryBackground: string,
-  defaultRisk: number,
-  subreddit: string,
-  hashtag: string
 }

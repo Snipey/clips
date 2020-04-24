@@ -26,13 +26,6 @@ query {
     categoryId
     categoryName
     alternativeName
-    categoryThumbnail
-    categoryFollowers
-    categoryPublishers
-    categoryBackground
-    defaultRisk
-    subreddit
-    hashtag
   }
 }
 `;
@@ -53,6 +46,7 @@ function sec2time(timeInSeconds: number) {
 }
 const ClipsPage: NextPage<Props> = ({ categories, clips, lastUpdated, error }) => {
   if (error) return <ErrorPage err={error} statusCode={500} />;
+
   function getCategory(id: number){
     return categories.filter(cat => cat.categoryId == id)
   }
@@ -65,11 +59,12 @@ const ClipsPage: NextPage<Props> = ({ categories, clips, lastUpdated, error }) =
         <h1>Latest Clips</h1>
         <p>Last Updated: {lastUpdated}</p>
       </Heading>
-        {/* // TODO Show game categories
+        {/* 
+        // TODO Show game categories
         // TODO Show latest clips */}
       <ClipsContainer>
         {clips.map((clip: Clip) => (
-          <Link href="/[clip]" as={`/${clip.contentId.replace("cid", "")}`}>
+          <Link key={clip.contentId} href="/[clip]" as={`/${clip.contentId.replace("cid", "")}`}>
             <a>
               <div className="clip" key={clip.contentId}>
                 <div className="meta">
