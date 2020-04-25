@@ -1,12 +1,21 @@
+// Next imports
 import { NextPage, NextPageContext } from "next";
-import { fetcher, host } from "../lib/fetcher";
-import { Clip } from '../interfaces/clips';
-import ErrorPage from "./_error";
-import styled from "styled-components";
-import { timeSince } from "../lib/timeSince";
-import { ClipsBody, Heading } from "../components/clips";
 import Link from "next/link";
 import Head from "next/head";
+
+// Util/Lib
+import { fetcher, host } from "../lib/fetcher";
+import { timeSince } from "../lib/timeSince";
+
+// Interfaces
+import { Clip } from '../interfaces/clips';
+
+
+// Components
+import styled from "styled-components";
+import ErrorPage from "./_error";
+import { ClipsBody } from "../components/clips";
+import { Heading } from '../components/layout';
 
 interface Props {
   id?: string;

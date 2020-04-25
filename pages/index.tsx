@@ -1,13 +1,21 @@
+//Next Imports
 import { NextPage } from "next";
-import { fetcher } from "../lib/fetcher";
-import { Clip, Category, Categories } from '../interfaces/clips';
-import ErrorPage from "./_error";
-import styled from "styled-components";
-import { timeSince } from "../lib/timeSince";
-import { rgba } from "polished";
-import { ClipsBody, Heading } from "../components/clips";
 import Link from "next/link";
 import Head from "next/head";
+import styled from "styled-components";
+
+// Util/Lib imports
+import { fetcher } from "../lib/fetcher";
+import { timeSince } from "../lib/timeSince";
+import { rgba } from "polished";
+
+// Interfaces
+import { Clip, Category, Categories } from '../interfaces/clips';
+
+// Components
+import ErrorPage from "./_error";
+import { ClipsBody } from "../components/clips";
+import { Heading } from '../components/layout';
 
 const clipsQuery = `
 query {
@@ -36,15 +44,8 @@ interface Props {
   lastUpdated?: string;
   error?: string;
 }
-function sec2time(timeInSeconds: number) {
-  let pad = function(num, size) { return ('000' + num).slice(size * -1); };
-  let time: number = timeInSeconds;
-  let minutes = Math.floor(time / 60) % 60;
-  let seconds = Math.floor(time - minutes * 60);
 
-  return pad(minutes, 2) + ':' + pad(seconds, 2);
-}
-const ClipsPage: NextPage<Props> = ({ categories, clips, lastUpdated, error }) => {
+const ClipsIndex: NextPage<Props> = ({ categories, clips, lastUpdated, error }) => {
   if (error) return <ErrorPage err={error} statusCode={500} />;
 
   function getCategory(id: number){
@@ -55,29 +56,29 @@ const ClipsPage: NextPage<Props> = ({ categories, clips, lastUpdated, error }) =
       <Head>
         <title>Snipey's Medal TV Clips</title>
       </Head>
+
+      {/* Start Latest Clips section */}
       <Heading>
         <h1>Latest Clips</h1>
-        <p>Last Updated: {lastUpdated}</p>
       </Heading>
-        {/* 
-        // TODO Show game categories
-        // TODO Show latest clips */}
       <ClipsContainer>
+        {/*  TODO Limit the results to 5 */}
         {clips.map((clip: Clip) => (
           <Link key={clip.contentId} href="/[clip]" as={`/${clip.contentId.replace("cid", "")}`}>
+          {/* TODO Create Clip template */}
             <a>
               <div className="clip" key={clip.contentId}>
                 <div className="meta">
                   <img src={clip.contentThumbnail} />
-                  <ClipMeta horizontal="right" vertical="bottom">
+                  {/* <ClipMeta horizontal="right" vertical="bottom">
                     {clip.contentViews} views
                   </ClipMeta>
                   <ClipMeta horizontal="left" vertical="bottom">
                     {sec2time(clip.videoLengthSeconds)}
-                  </ClipMeta>
+                  </ClipMeta> */}
                 </div>
                 <p>{clip.contentTitle}</p>
-                <ClipInfo>
+                {/* <ClipInfo>
                   <InfoItem>
                     {getCategory(clip.categoryId).map((category: Category) => (
                       category.categoryName
@@ -86,17 +87,22 @@ const ClipsPage: NextPage<Props> = ({ categories, clips, lastUpdated, error }) =
                   <InfoItem>
                     {timeSince(clip.createdTimestamp * 1000)}
                   </InfoItem>
-                </ClipInfo>
+                </ClipInfo> */}
               </div>
             </a>
           </Link>
         ))}
       </ClipsContainer>
+      {/* End Latest Clips */}
+
+      {/* Start Categories */}
+
+      {/* End Categories */}
     </ClipsBody>
   );
 };
 
-ClipsPage.getInitialProps = async () => {
+ClipsIndex.getInitialProps = async () => {
   try {
     const { data, errors } = await fetcher(clipsQuery).then((data) =>
       data.json()
@@ -113,7 +119,9 @@ ClipsPage.getInitialProps = async () => {
   }
 };
 
-export default ClipsPage;
+export default ClipsIndex;
+
+
 
 const ClipsContainer = styled.div`
   display: grid;
@@ -136,16 +144,21 @@ const ClipsContainer = styled.div`
 
   a {
     text-decoration: none;
-    color: ${(props) => props.theme.color};
+    color: white;
+    fon
   }
 
   div.clip {
     background: ${(props) => props.theme.darker};
     margin: 10px;
     display: flex;
-    border-radius: 25px;
+    border-radius: 10px;
     flex-direction: column;
     cursor: pointer;
+
+    div.published {
+      position: relative;
+    }
 
     &:hover {
       background: ${(props) => props.theme.accent};
@@ -166,40 +179,22 @@ const ClipsContainer = styled.div`
 
       img {
         width: 100%;
-        border-radius: 25px 25px 0px 0px;
+        border-radius: 10px 10px 0px 0px;
       }
     }
   }
 `;
 
-const ClipMeta = styled.div<{
-  horizontal: "left" | "right";
-  vertical: "top" | "bottom";
-}>`
-  position: absolute;
-  color: ${(props) => props.theme.color};
-  background: ${(props: any) => rgba(props.theme.darker, 0.75)};
-  padding: 0 10px;
-  font-size: 0.8rem;
+// const ClipMeta = styled.div<{
+//   horizontal: "left" | "right";
+//   vertical: "top" | "bottom";
+// }>`
+//   position: absolute;
+//   color: ${(props) => props.theme.color};
+//   background: ${(props: any) => rgba(props.theme.darker, 0.75)};
+//   padding: 0 10px;
+//   font-size: 0.8rem;
 
-  ${(props) => props.horizontal}: 0;
-  ${(props) => props.vertical}: 0;
-`;
-
-const ClipInfo = styled.ul`
-  display: flex;
-  align-items: stretch; /* Default */
-  justify-content: space-between;
-  width: 100%;
-  margin: 0;
-  padding: 0;
-`;
-
-const InfoItem = styled.li`
-  display: block;
-  flex: 0 1 auto; /* Default */
-  list-style-type: none;
-  font-size: 0.8em;
-  color: lightgrey;
-  padding: 2px 15px 2px 15px;
-`;
+//   ${(props) => props.horizontal}: 0;
+//   ${(props) => props.vertical}: 0;
+// `;

@@ -9,9 +9,9 @@ import "../global.css";
 import { ThemeProvider } from "styled-components";
 
 const theme = {
-  background: "#060a16",
-  darker: "#1f2734",
-  accent: "#ffa228",
+  background: "#09090D",
+  darker: "#1C1C1C",
+  accent: "#fff",
   color: "#ffffff",
   grey: "#656d7a",
   error: "#bb3e3e",
